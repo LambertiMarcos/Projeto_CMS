@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +11,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Divisão entre Frente "site" e Administrator
 
-Route::get('/', function () {
-    return view('welcome');
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site; 
+use App\Http\Controllers\Admin; 
+
+Route::get('/', [Site\HomeController::class, 'index']);
+
+
+Route::prefix('painel')->group(function(){
+    Route::get('/', [Admin\HomeController::class, 'index']);
 });
