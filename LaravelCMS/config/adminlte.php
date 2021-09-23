@@ -226,11 +226,13 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /*
+        [ // tipo de busca
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => true, // colna a parte de cima 
         ],
+        */
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -241,24 +243,41 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+        /*
+        [ //menu oculto
+            'text' => 'Dashboard',
+            'url'  => 'painel',
+            'can'  => 'manage-blog', // tipo de permissão
         ],
+        */
+        //menu Principal
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
+            'text'        => 'Dashboard',
+            'url'         => 'painel',
             'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            //'label'       => 4,
+            //'label_color' => 'success',
+        ],        
+        [//Minhas páginas
+            'text'        => 'Minhas Páginas',
+            'url'         => 'painel/pages',
+            'icon'        => 'far fa-fw fa-file',
         ],
+        //Meus usuários
+        [
+            'text'        => 'Usuários',
+            'url'         => 'painel/users',
+            'icon'        => 'far fa-fw fa-file',
+
+        ],
+        // Configurações da conta
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
+        /*
         [
             'text' => 'change_password',
             'url'  => 'admin/settings',
@@ -318,6 +337,7 @@ return [
             'icon_color' => 'cyan',
             'url'        => '#',
         ],
+        */
     ],
 
     /*

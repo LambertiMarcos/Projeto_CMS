@@ -49,9 +49,11 @@ class LoginController extends Controller
         $data = $request->only([
             'email',
             'password',
-            'remenber'
+            
         ]);
         $validator = $this->validator($data);
+        // pega a informação do campo lembra senha
+        $remember = $request->input('remember', false);
 
         if($validator->fails()) {
             return redirect()->route('login')
@@ -59,7 +61,7 @@ class LoginController extends Controller
             ->withInput();
         }
 
-        if(Auth::attempt($data)){
+        if(Auth::attempt($data, $remember)){ //2º parametro do attempt - uso do token, é salvo no BD "remember_token".
             return redirect()->route('admin');
         }else{
             // adicionar um error

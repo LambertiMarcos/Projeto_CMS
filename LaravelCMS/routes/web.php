@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site; 
 use App\Http\Controllers\Admin; 
 
+
 Route::get('/', [Site\HomeController::class, 'index']);
 
 
@@ -30,6 +31,8 @@ Route::prefix('painel')->group(function(){
     Route::post('register', [Admin\Auth\RegisterController::class, 'register']);
 
     Route::post('logout', [Admin\Auth\LoginController::class, 'logout'])->name('logout');
+
+    Route::resource('users', Admin\UserController::class);
 });
 
 // Auth::routes();
