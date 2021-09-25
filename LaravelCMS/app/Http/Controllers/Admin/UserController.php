@@ -88,7 +88,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        if($user) {
+            return view('admin.users.edit',[
+                'user' => $user
+            ]);               
+        }
+        return redirect()->route('users.index');
     }
 
     /**
@@ -100,7 +107,71 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        if($user){
+            $data = $request->only([
+                'name',
+                'email',
+                'password',
+                'password_confirmation'
+            ]);
+
+            $validator = Validator::make([
+                'name' => $data['name'],
+                'email' => $data['email']
+            ],[
+                'name' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:100']
+            ]);
+
+
+        // 1. altera o nome
+        $user->name = $data['name'];
+        // 2. alteração do e-mail
+        if($user->email != $data['email']) {
+            $hasEmail = User::where('email', $data['email'])->get();
+            if(count($hasEmail) === 0 ){
+                $user->email = $data['email'];
+            }else{
+                $validator-> errors()->add('email', __('validation.unique', [
+                    'attribute' => 'email',
+                    
+                ]));
+            }
+
+        }
+        // 3. alteração da senha
+        // 3.1 verificar se o usuário digitou a senha
+        if(!empty($data['password'])) {
+        // 3.2 verificar se a confirmação está ok
+            if(strlen($data['password']) >= 4) {
+                if($data['password'] === $data['password_confirmation']) {
+                    // 3.2 alterar a senha
+                        $user->password = Hash::make($data['password']);
+                    }else{
+                        $validator-> errors()->add('psssword', __('validation.confirmed', [
+                            'attribute' => 'password'
+                        ])); 
+                    }
+            }else {
+                $validator-> errors()->add('psssword', __('validation.min.string', [
+                    'attribute' => 'password',
+                    'min' => 4
+                ]));
+            }
+        }
+
+        if(count( $validator->errors()) > 0) {
+            return redirect()->route('users.edit', [
+                'user' => $id
+            ])->withErrors($validator);
+        }
+            
+            $user->save();
+        }
+
+       return redirect()->route('users.index');
     }
 
     /**
