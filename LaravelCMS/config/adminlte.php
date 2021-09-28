@@ -262,22 +262,34 @@ return [
             'text'        => 'Minhas Páginas',
             'url'         => 'painel/pages',
             'icon'        => 'far fa-fw fa-file',
+            
         ],
         //Meus usuários
         [
             'text'        => 'Usuários',
             'url'         => 'painel/users',
             'icon'        => 'far fa-fw fa-file',
-
+            'can'         => 'edit-users'
         ],
         // Configurações da conta
-        ['header' => 'account_settings'],
+        ['header' => 'Configurações'],
+        [
+            'text'        => 'Configurações do site',
+            'url'         => 'painel/settings',
+            'icon'        => 'fas fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Meu Perfil',
+            'url'         => 'painel/profile',
+            'icon'        => 'fas fa-fw fa-user',
+        ],
+
+        /*
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
-        /*
         [
             'text' => 'change_password',
             'url'  => 'admin/settings',

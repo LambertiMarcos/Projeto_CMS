@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    // só da acesso as páginas se estiver logado
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('can:edit-users');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +25,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(8); // paginação herdada doquery builder
+        $loggedId = intval(Auth::id()); // recebe o id do usuário logado "inteiro"
+
         return view('admin.users.index', [
-            'users' => $users
+            'users' => $users,
+            'loggedId' => $loggedId
         ]);
     }
 
@@ -171,7 +181,7 @@ class UserController extends Controller
             $user->save();
         }
 
-       return redirect()->route('users.index');
+    return redirect()->route('users.index');
     }
 
     /**
@@ -182,6 +192,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // não permitir que exclua o usário logado
+        $loggedId = intval(Auth::id());
+
+        if($loggedId !== intval($id)){
+            $user = User::find($id);
+            $user->delete();
+        }
+
+        return redirect()->route('users.index');
     }
 }
