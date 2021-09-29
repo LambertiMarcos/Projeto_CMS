@@ -35,6 +35,11 @@ Route::prefix('painel')->group(function(){
     Route::resource('users', Admin\UserController::class);
 
     Route::get('profile', [Admin\ProfileController::class, 'index'])->name('profile');
+    Route::put('profilesave', [Admin\ProfileController::class, 'save'])->name('profile.save');
+
+    Route::get('settings', [Admin\SettingController::class, 'index'])->name('settings');
+    Route::put('settingssave', [Admin\SettingController::class, 'save'])->name('settings.save');
+
 });
 
 // Auth::routes();
