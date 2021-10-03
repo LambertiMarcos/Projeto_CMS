@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    // só da acesso as páginas se estiver logado
+    // só tem acesso as páginas se estiver logado
     public function __construct(){
         $this->middleware('auth');
         $this->middleware('can:edit-users');
