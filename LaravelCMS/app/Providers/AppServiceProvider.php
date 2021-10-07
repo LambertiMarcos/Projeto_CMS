@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+Use App\Models\Page;
+Use App\Models\Setting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Menu
+        $frontMenu =[
+            '/' => 'Home'
+        ];
+        $pages = Page::all();
+        foreach($pages as $page) {
+            $frontMenu[ $page['slug'] ] = $page['title'];
+        }
+        View::share('front_menu', $frontMenu);
+
+        // Configurações
+        $config = [];
+        $settings = Setting::all();
+        foreach($settings as $setting) {
+            $config[ $setting['name'] ] = $setting['content'];
+        }
+        View::Share('front_config', $config);
     }
 }

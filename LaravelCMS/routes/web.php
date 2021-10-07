@@ -41,12 +41,13 @@ Route::prefix('painel')->group(function(){
     Route::get('settings', [Admin\SettingController::class, 'index'])->name('settings');
     Route::put('settingssave', [Admin\SettingController::class, 'save'])->name('settings.save');
 
-
-
 });
 
-// Auth::routes();
+Route::fallback([Site\PageController::class, 'index']);
 
+
+/*
+// RouteAuth::routes();
 Route::fallback(function(){
     return view('404');
 });

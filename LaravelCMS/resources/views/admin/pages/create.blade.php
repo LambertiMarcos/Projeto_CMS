@@ -36,7 +36,7 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Conteúdo</label>
                             <div class="col-sm-10">
-                                <textarea name="body" class="form-control">{{old('body')}}</textarea>
+                                <textarea name="body" id="bodyfield" class="form-control">{{old('body')}}</textarea>
                             </div>
                         </div>
 
@@ -50,6 +50,23 @@
         </div>
     </div>
 
-
+<script src="https://cdn.tiny.cloud/1/6nt55jzy7pb18h1ryesk61uzx9w7q2wyon9nnn4dxz6qqlc3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#bodyfield',
+        height: 300,
+        menubar:false,
+        plugins:['link', 'table', 'image', 'autoresize', 'lists'],
+        toolbar:'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | link image | bullist numlist',
+        content_css:[
+            '{{asset('assets/css/content.css')}}', 
+        ],
+        images_upload_url: '{{route('imageupload')}}',
+        images_upload_credentials: true,
+        toolbar_mode: 'floating',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Marcos Lamberti',
+    });
+</script>
 
 @endsection
